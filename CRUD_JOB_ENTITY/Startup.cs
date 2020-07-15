@@ -1,4 +1,4 @@
-using CRUD_JOB_ENTITY.DAL;
+//using CRUD_JOB_ENTITY.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,8 +21,7 @@ namespace CRUD_JOB_ENTITY
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cn")));
-            //services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cn")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
