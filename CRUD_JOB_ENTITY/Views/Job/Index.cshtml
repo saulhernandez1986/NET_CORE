@@ -44,9 +44,8 @@
                 @Html.DisplayFor(modelItem => item.ExpiresdAt)
             </td>
             <td>
-                <a asp-action="AddOrEdit" asp-route-id="@item.Job">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Job">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Job">Delete</a>
+                <a asp-action="AddOrEdit" asp-route-id="@item.Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Job" class="text-danger m-1" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
         </tr>
 }

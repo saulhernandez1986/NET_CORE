@@ -46,7 +46,12 @@ namespace CRUD_JOB_ENTITY.Controllers
         // GET: Job/Create
         public IActionResult AddOrEdit(Guid id= new Guid())
         {
-            return View(new JobEntity());
+            var guidIsEmpty = id == Guid.Empty;
+
+            if (guidIsEmpty)
+                return View(new JobEntity());
+            else
+                return View(_context.Jobs.Find(id));
         }
 
         // POST: Job/Create
@@ -58,8 +63,17 @@ namespace CRUD_JOB_ENTITY.Controllers
         {
             if (ModelState.IsValid)
             {
-                jobEntity.Job = Guid.NewGuid();
-                _context.Add(jobEntity);
+                var guidIsEmpty = jobEntity.Job == Guid.Empty;
+
+                if (guidIsEmpty)
+                {
+                    jobEntity.Job = Guid.NewGuid();
+                    _context.Add(jobEntity);
+                }
+                else
+                {
+                    _context.Update(jobEntity);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -120,19 +134,11 @@ namespace CRUD_JOB_ENTITY.Controllers
         // GET: Job/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var jobEntity = await _context.Jobs.FindAsync(id);
+            _context.Jobs.Remove(jobEntity);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
-            var jobEntity = await _context.Jobs
-                .FirstOrDefaultAsync(m => m.Job == id);
-            if (jobEntity == null)
-            {
-                return NotFound();
-            }
-
-            return View(jobEntity);
         }
 
         //// POST: Job/Delete/5
