@@ -11,20 +11,24 @@ namespace CRUD_JOB_ENTITY.Models
         public Guid Job { get; set; }
 
         [Required]
+        [DisplayName("Job Title")]
         [Column(TypeName = "nvarchar(50)")]
         public string JobTitle { get; set; }
 
         [Required]
+        [DisplayName("Description")]
         [Column(TypeName = "nvarchar(100)")]
         public string Description { get; set; }
 
         [Required]
+        [DisplayName("Created At")]
         [Column(TypeName = "datetime")]
         //[DefaultValue(typeof(DateTime),"")]
         [DefaultValue("getdate()")]
         public DateTime CreatedAt { get; set; }
 
         [Required]
+        [DisplayName("Expires At")]
         [Column(TypeName = "datetime")]
         public DateTime ExpiresdAt { get; set; }
     }

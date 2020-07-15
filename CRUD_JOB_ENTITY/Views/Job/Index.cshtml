@@ -2,14 +2,13 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Job List</h1>
+<hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -24,7 +23,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ExpiresdAt)
             </th>
-            <th></th>
+            <th>
+                <a asp-action="AddOrEdit" class="btn btn-outline-success"><i class="fa fa-plus-square" aria-hidden="true"></i>Job</a>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.ExpiresdAt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Job">Edit</a> |
+                <a asp-action="AddOrEdit" asp-route-id="@item.Job">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Job">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Job">Delete</a>
             </td>
