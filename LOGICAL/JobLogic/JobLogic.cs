@@ -21,8 +21,6 @@ namespace LOGIC.JobLogic
         {
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile<LogicApplicationProfile>();
-                cfg.CreateMap<Jobs, JobEntity>();
-                cfg.CreateMap<JobEntity, Jobs>();
             });
 
             var mapper = config.CreateMapper();

@@ -1,4 +1,5 @@
-﻿using DAL.DataContext;
+﻿using AutoMapper;
+using DAL.DataContext;
 using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;

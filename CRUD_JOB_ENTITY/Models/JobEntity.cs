@@ -19,7 +19,6 @@ namespace CRUD_JOB_ENTITY.Models
 
         [Required]
         [DisplayName("Created At")]
-        //[DefaultValue(typeof(DateTime),"")]
         [DefaultValue("getdate()")]
         public DateTime CreatedAt { get; set; }
 
