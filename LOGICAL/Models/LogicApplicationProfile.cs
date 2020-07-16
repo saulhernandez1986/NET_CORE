@@ -8,6 +8,7 @@ namespace LOGIC.Models
         public LogicApplicationProfile()
         {
             CreateMap<Jobs, JobEntity>();
+            CreateMap<JobEntity, Jobs>();
         }
     }
 }

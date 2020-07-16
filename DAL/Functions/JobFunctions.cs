@@ -10,17 +10,6 @@ namespace DAL.Functions
 {
     public class JobFunctions : IJobEntity
     {
-        private readonly ApplicationDbContext _context;
-        //public async Task<JobEntity> GetJobList()
-        //{
-        //    private readonly ApplicationDbContext _context;
-        //    //using (var _context = ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
-        //    //{
-
-        //    //}
-        //    return await _context.Jobs.ToListAsync();
-
-        //}
 
         public async Task<List<Jobs>> GetAllJobs()
         {
@@ -33,20 +22,47 @@ namespace DAL.Functions
             return jobs;
         }
 
+        public Jobs GetJobById(Guid id)
+        {
+            Jobs job = new Jobs();
+            using (var _context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                job = _context.Jobs.Find(id);
+            }
+            return job;
+        }
+
         public async Task<Jobs> AddOrEdit(Jobs j)
         {
             var guidIsEmpty = j.Job == Guid.Empty;
-            if (guidIsEmpty)
+            using (var _context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
             {
-                j.Job = Guid.NewGuid();
-                _context.Add(j);
+                if (guidIsEmpty)
+                {
+                    j.Job = Guid.NewGuid();
+                    _context.Add(j);
+                }
+                else
+                {
+                    _context.Update(j);
+                }
+                await _context.SaveChangesAsync();
             }
-            else
-            {
-                _context.Update(j);
-            }
-            await _context.SaveChangesAsync();
+            
             return j;
+        }
+
+        public async Task<Jobs> Delete(Guid? id)
+        {
+            Jobs job = new Jobs();
+            using (var _context = new ApplicationDbContext(ApplicationDbContext.ops.dbOptions))
+            {
+                job = _context.Jobs.Find(id);
+                _context.Jobs.Remove(job);
+                await _context.SaveChangesAsync();
+            }
+            
+            return job;
         }
     }
 }

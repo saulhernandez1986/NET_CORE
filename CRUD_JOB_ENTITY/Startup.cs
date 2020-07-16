@@ -1,10 +1,11 @@
-//using CRUD_JOB_ENTITY.DAL;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using CRUD_JOB_ENTITY.Mappings;
 
 namespace CRUD_JOB_ENTITY
 {
@@ -22,9 +23,14 @@ namespace CRUD_JOB_ENTITY
         {
             services.AddRazorPages();
 
-            Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());
-            services.AddAutoMapper(typeof(Startup));
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cn")));
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingsProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

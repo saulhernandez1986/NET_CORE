@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using DAL.Entities;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using LOGIC.Models;
 
@@ -17,18 +16,27 @@ namespace LOGIC.JobLogic
         private IJobEntity _Job = new JobFunctions();
 
         private readonly IMapper _mapper;
-        public JobLogic(IMapper mapper)
+
+        public JobLogic()
         {
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<LogicApplicationProfile>();
+                cfg.CreateMap<Jobs, JobEntity>();
+                cfg.CreateMap<JobEntity, Jobs>();
+            });
+
+            var mapper = config.CreateMapper();
             _mapper = mapper;
         }
 
 
         //Add or edit jobs
-        public async Task<Boolean> AddOrEdit(Jobs j)
+        public async Task<Boolean> AddOrEdit(JobEntity j)
         {
             try
             {
-                var result = await _Job.AddOrEdit(j);
+                var model = _mapper.Map<Jobs>(j);
+                var result = await _Job.AddOrEdit(model);
                 if (result.Job == Guid.Empty)
                 {
                     return false;
@@ -48,21 +56,22 @@ namespace LOGIC.JobLogic
         public async Task<List<JobEntity>> GetAllJobs()
         {
             var jobs = await _Job.GetAllJobs();
-
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Jobs, JobEntity>();
-            });
-            IMapper iMapper = config.CreateMapper();
-            //var source = new DAL.Entities.JobEntity();
-            var destination = iMapper.Map<List<Jobs>, List<JobEntity>>(jobs);
-            //var config = new MapperConfiguration(mc => mc.CreateMap<DAL.Entities.JobEntity, LOGIC.Models.JobEntity>());
-            //var mapper = new Mapper(config);
-            //var result = mapper.Map<List<DAL.Entities.JobEntity>, List<LOGIC.Models.JobEntity>>(jobs);
-            //var job = iMapper.Map<List<LOGIC.Models.JobEntity>>(jobs);
-
-            //List<LOGIC.Models.JobEntity> jobs = await _Job.GetAllJobs();
-            return destination;
+            var model = _mapper.Map<List<JobEntity>>(jobs);
+            return model;
         }
 
+        public JobEntity GetJobById(Guid id)
+        {
+            var job = _Job.GetJobById(id);
+            var model = _mapper.Map<JobEntity>(job);
+            return model;
+        }
+
+        public async Task<JobEntity> Delete(Guid? id)
+        {
+            var job = await _Job.Delete(id);
+            var model = _mapper.Map<JobEntity>(job);
+            return model;
+        }
     }
 }
