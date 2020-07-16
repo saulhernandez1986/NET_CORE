@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class JobEntity
+    public class Jobs
     {
         [Key]
         public Guid Job { get; set; }
@@ -33,14 +33,4 @@ namespace DAL.Entities
         public DateTime ExpiresdAt { get; set; }
     }
 
-    //public class JobActions
-    //{
-    //    private readonly ApplicationDbContext _context;
-
-    //    public async Task<IEnumerable<JobEntity>> GetList()
-    //    {
-    //        return await _context.Jobs.ToListAsync();
-    //    }
-
-    //}
 }

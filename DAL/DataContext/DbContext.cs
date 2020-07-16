@@ -7,7 +7,7 @@ namespace DAL.DataContext
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        public DbSet<JobEntity> Jobs { get; set; }
+        public DbSet<Jobs> Jobs { get; set; }
 
         public class OptionBuild
         {

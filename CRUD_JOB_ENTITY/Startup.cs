@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace CRUD_JOB_ENTITY
 {
@@ -21,6 +21,9 @@ namespace CRUD_JOB_ENTITY
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());
+            services.AddAutoMapper(typeof(Startup));
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cn")));
         }
 
